@@ -4,6 +4,9 @@ controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     hotBallon.top += -1
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.showLongText("tot", DialogLayout.Bottom)
+})
 let hotBallon: Sprite = null
 hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
 hotBallon.setStayInScreen(true)
