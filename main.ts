@@ -157,13 +157,20 @@ game.onUpdateInterval(500, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
+            . . . . 3 3 3 3 3 3 3 . . . . . 
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.Enemy)
         gegner.setPosition(4, randint(5, 100))
         gegner.setVelocity(10, 0)
     }
 })
-game.onUpdateInterval(500, function () {
+game.onUpdateInterval(200, function () {
     Gegnerwahrscheinlichkeit2 = randint(0, 20)
     if (1 == Gegnerwahrscheinlichkeit2) {
         gegner2 = sprites.create(img`
