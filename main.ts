@@ -2,6 +2,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     game.showLongText("Tot", DialogLayout.Bottom)
 })
 let othersprite: Sprite = null
+let gegner: Sprite = null
+let Gegnerwahrscheinlichkeit = 0
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -127,27 +129,32 @@ scene.setBackgroundImage(img`
 effects.blizzard.startScreenEffect()
 let hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
 hotBallon.setStayInScreen(true)
-let gegner = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . 2 2 2 . . . . . . . 
-    . . . . . . 2 2 2 . . . . . . . 
-    . . . . . . 2 2 2 . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Enemy)
-gegner.setVelocity(10, 0)
-gegner.setPosition(4, 59)
-gegner.x = 10
+game.onUpdateInterval(2000, function () {
+    Gegnerwahrscheinlichkeit = randint(0, 4)
+    if (Gegnerwahrscheinlichkeit == 1) {
+        gegner = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . 2 2 2 . . . . . . . 
+            . . . . . . 2 2 2 . . . . . . . 
+            . . . . . . 2 2 2 . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Enemy)
+        gegner.setVelocity(10, 0)
+        gegner.setPosition(4, 59)
+        gegner.x = 10
+    }
+})
 forever(function () {
     hotBallon.setVelocity(0, 30)
     info.changeScoreBy(1)
