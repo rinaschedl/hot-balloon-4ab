@@ -1,11 +1,17 @@
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.showLongText("Tot", DialogLayout.Bottom)
+    info.changeLifeBy(-1)
+    otherSprite.setFlag(SpriteFlag.Ghost, true)
+    hotBallon.startEffect(effects.warmRadial)
+    pause(1000)
+    effects.clearParticles(hotBallon)
 })
 let othersprite: Sprite = null
 let gegner2: Sprite = null
 let Gegnerwahrscheinlichkeit2 = 0
 let gegner: Sprite = null
 let Gegnerwahrscheinlichkeit = 0
+let hotBallon: Sprite = null
+info.setLife(3)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -129,7 +135,7 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
 effects.blizzard.startScreenEffect()
-let hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
+hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
 hotBallon.setStayInScreen(true)
 forever(function () {
     hotBallon.setVelocity(0, 30)
