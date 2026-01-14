@@ -1,17 +1,11 @@
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    info.changeLifeBy(-1)
-    otherSprite.setFlag(SpriteFlag.Ghost, true)
-    hotBallon.startEffect(effects.warmRadial)
-    pause(1000)
-    effects.clearParticles(hotBallon)
+    game.showLongText("Tot", DialogLayout.Bottom)
 })
 let othersprite: Sprite = null
 let gegner2: Sprite = null
 let Gegnerwahrscheinlichkeit2 = 0
 let gegner: Sprite = null
 let Gegnerwahrscheinlichkeit = 0
-let hotBallon: Sprite = null
-info.setLife(3)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -135,7 +129,7 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
 effects.blizzard.startScreenEffect()
-hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
+let hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
 hotBallon.setStayInScreen(true)
 forever(function () {
     hotBallon.setVelocity(0, 30)
@@ -145,7 +139,7 @@ forever(function () {
     }
 })
 game.onUpdateInterval(500, function () {
-    Gegnerwahrscheinlichkeit = randint(0, 8)
+    Gegnerwahrscheinlichkeit = randint(0, 20)
     if (Gegnerwahrscheinlichkeit == 1) {
         gegner = sprites.create(img`
             . . . . . . . . . . . . . . . . 
@@ -170,7 +164,7 @@ game.onUpdateInterval(500, function () {
     }
 })
 game.onUpdateInterval(500, function () {
-    Gegnerwahrscheinlichkeit2 = randint(0, 8)
+    Gegnerwahrscheinlichkeit2 = randint(0, 20)
     if (1 == Gegnerwahrscheinlichkeit2) {
         gegner2 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
