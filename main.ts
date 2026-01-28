@@ -1,3 +1,8 @@
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    pause(1000)
+    effects.clearParticles(hotBallon)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (Kontakterkannt == 0) {
         info.changeLifeBy(-1)
@@ -253,5 +258,27 @@ game.onUpdateInterval(200, function () {
         ...............ffceec...............
         `, -100, 0)
     othersprite.y += 120
+    othersprite.changeScale(0.0001, ScaleAnchor.Top)
+})
+game.onUpdateInterval(200, function () {
+    othersprite = sprites.createProjectileFromSide(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 1 1 . . . . . . . 
+        . . . . . . . 1 1 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, -100, 0)
+    othersprite.y += 0
     othersprite.changeScale(0.0001, ScaleAnchor.Top)
 })
