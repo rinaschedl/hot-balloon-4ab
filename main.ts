@@ -1,15 +1,20 @@
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
-    otherSprite.setFlag(SpriteFlag.Ghost, true)
-    hotBallon.startEffect(effects.warmRadial)
     pause(1000)
     effects.clearParticles(hotBallon)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (Kontakterkannt == 0) {
+        info.changeLifeBy(-1)
+        Kontakterkannt = 1
+    }
+})
 let othersprite: Sprite = null
+let gegner2: Sprite = null
+let Gegnerwahrscheinlichkeit2 = 0
 let gegner: Sprite = null
 let Gegnerwahrscheinlichkeit = 0
-let hotBallon: Sprite = null
-info.setLife(3)
+let Kontakterkannt = 0
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -133,40 +138,56 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
 effects.blizzard.startScreenEffect()
-hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
+let hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
 hotBallon.setStayInScreen(true)
-game.onUpdateInterval(2000, function () {
-    Gegnerwahrscheinlichkeit = randint(0, 4)
-    if (Gegnerwahrscheinlichkeit == 1) {
-        gegner = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . 2 2 2 . . . . . . . 
-            . . . . . . 2 2 2 . . . . . . . 
-            . . . . . . 2 2 2 . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Enemy)
-        gegner.setVelocity(10, 0)
-        gegner.setPosition(4, 59)
-        gegner.x = 10
-    }
-})
+info.setLife(3)
 forever(function () {
     hotBallon.setVelocity(0, 30)
     info.changeScoreBy(1)
     if (controller.A.isPressed()) {
         hotBallon.setVelocity(0, -30)
     }
+})
+game.onUpdateInterval(500, function () {
+    Gegnerwahrscheinlichkeit = randint(0, 20)
+    if (Gegnerwahrscheinlichkeit == 1) {
+        gegner = sprites.create(img`
+            ................
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ................
+            ................
+            ................
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ....2222222.....
+            ................
+            ................
+            ................
+            ................
+            ................
+            `, SpriteKind.Enemy)
+        gegner.setPosition(4, randint(5, 100))
+        gegner.setVelocity(10, 0)
+    }
+})
+game.onUpdateInterval(500, function () {
+    Gegnerwahrscheinlichkeit2 = randint(0, 20)
+    if (1 == Gegnerwahrscheinlichkeit2) {
+        gegner2 = sprites.create(assets.image`Einhorndrache`, SpriteKind.Enemy)
+        gegner2.setPosition(160, randint(5, 100))
+        gegner2.setVelocity(-40, 0)
+    }
+    Kontakterkannt = 0
 })
 game.onUpdateInterval(200, function () {
     othersprite = sprites.createProjectileFromSide(img`
@@ -213,5 +234,27 @@ game.onUpdateInterval(200, function () {
         ...............ffceec...............
         `, -100, 0)
     othersprite.y += 120
+    othersprite.changeScale(0.0001, ScaleAnchor.Top)
+})
+game.onUpdateInterval(200, function () {
+    othersprite = sprites.createProjectileFromSide(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 1 1 . . . . . . . 
+        . . . . . . . 1 1 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, -100, 0)
+    othersprite.y += 0
     othersprite.changeScale(0.0001, ScaleAnchor.Top)
 })
