@@ -1,11 +1,15 @@
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.showLongText("Tot", DialogLayout.Bottom)
+    if (Kontakterkannt == 0) {
+        info.changeLifeBy(-1)
+        Kontakterkannt = 1
+    }
 })
 let othersprite: Sprite = null
 let gegner2: Sprite = null
 let Gegnerwahrscheinlichkeit2 = 0
 let gegner: Sprite = null
 let Gegnerwahrscheinlichkeit = 0
+let Kontakterkannt = 0
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -131,6 +135,7 @@ scene.setBackgroundImage(img`
 effects.blizzard.startScreenEffect()
 let hotBallon = sprites.create(assets.image`meinBild`, SpriteKind.Player)
 hotBallon.setStayInScreen(true)
+info.setLife(3)
 forever(function () {
     hotBallon.setVelocity(0, 30)
     info.changeScoreBy(1)
@@ -201,6 +206,7 @@ game.onUpdateInterval(500, function () {
         gegner2.setPosition(160, randint(5, 100))
         gegner2.setVelocity(-40, 0)
     }
+    Kontakterkannt = 0
 })
 game.onUpdateInterval(200, function () {
     othersprite = sprites.createProjectileFromSide(img`
